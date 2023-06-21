@@ -1,7 +1,7 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Home from "./pages/Home";
-import Personal from "./pages/personal";
-import Experience from "./pages/experience";
+import Personal from "./pages/Personal";
+import Experience from "./pages/Experience";
 import Completed from "./pages/Completed";
 
 function App() {
