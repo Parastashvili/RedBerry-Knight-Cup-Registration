@@ -3,10 +3,11 @@ import Home from "./pages/Home";
 import Personal from "./pages/Personal";
 import Experience from "./pages/Experience";
 import Completed from "./pages/Completed";
-
+import GlobalStyle from "./styled-components/GlobalStyled";
 function App() {
   return (
     <>
+      <GlobalStyle />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Home />} />
