@@ -4,11 +4,13 @@ import { useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
 import logo from "../assets/Khight cup logo.svg";
 import PersonalBG from "../assets/second.png";
-import SharedPageIndicator from "./SharedPageIndicator";
-import RightHeader from "./RightHeader";
+import SharedPageIndicator from "../components/SharedPageIndicator";
+import RightHeader from "../components/RightHeader";
 import arrow from "../assets/arrow-right-circle.png";
+import StyledPersonal from "../styled-components/StyledPersonal"
 import approved from "../assets/ok.png";
 import error from "../assets/Mark.png";
+import Header2 from "../components/Header";
 export default function Personal() {
   const {
     register,
@@ -33,7 +35,7 @@ export default function Personal() {
   useEffect(() => {
     localStorage.setItem("date", dateValue);
   }, [dateValue]);
-  console.log(watch("name"))
+  console.log(watch("name"));
   return (
     <div className="App">
       <div className="innerCont">
@@ -45,9 +47,9 @@ export default function Personal() {
           <ImageContainer />
         </div>
         <RighdSide>
-          <RightHeader/>
-          <SharedPageIndicator/>
-          <StyledPersonal onSubmit={handleSubmit(onSubmit)}>
+          <RightHeader />
+          <SharedPageIndicator />
+          <StyledPersonal>
             <h1>Personal information</h1>
             <p>This is basic informaton fields</p>
           </StyledPersonal>
@@ -123,31 +125,7 @@ const ImageContainer = styled.div`
   background: url(${PersonalBG});
   background-size: cover;
 `;
-const StyledPersonal = styled.div`
-  margin: 115px 48px 0px;
-  display: flex;
-  flex-direction: column;
-  gap: 3px;
-  h1 {
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 32px;
-    line-height: 150%;
-    color: #000000;
-    margin: 0px;
-  }
-  p {
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 600;
-    font-size: 14px;
-    line-height: 150%;
-    text-transform: capitalize;
-    color: #95939a;
-    margin: 0px;
-  }
-`;
+
 const RighdSide = styled.div`
   display: flex;
   flex-direction: column;

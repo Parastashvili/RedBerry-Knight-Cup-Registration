@@ -1,12 +1,4 @@
-import React from "react";
 import styled from "styled-components";
-export default function RightHeader() {
-  return (
-    <div>
-      <StyledRightHeader>Start creating your account</StyledRightHeader>;
-    </div>
-  );
-}
 const StyledRightHeader = styled.div`
   display: flex;
   align-items: center;
@@ -24,3 +16,4 @@ const StyledRightHeader = styled.div`
   color: #212529;
   border-bottom: 1px solid rgba(185, 180, 196, 0.3);
 `;
+export default StyledRightHeader;
