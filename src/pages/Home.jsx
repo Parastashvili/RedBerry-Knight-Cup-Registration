@@ -6,10 +6,10 @@ import arrow from "../assets/arrow-right-circle.png";
 export default function Home() {
   return (
     <StyledBody>
-      <nav>
+      <section>
         <Header />
         <img src={starting} alt="" />
-      </nav>
+      </section>
       <Lola>
         <StyledText>
           <h1>
