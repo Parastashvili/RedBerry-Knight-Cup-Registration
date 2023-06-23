@@ -1,15 +1,13 @@
-import Header from "../components/Header";
 import starting from "../assets/starting.png";
 import styled from "styled-components";
 import StyledButton from "../styled-components/StyledButton";
 import arrow from "../assets/arrow-right-circle.png";
+import BackImg from "../components/BackImg";
 export default function Home() {
   return (
     <StyledBody>
-      <section>
-        <Header />
-        <img src={starting} alt="" />
-      </section>
+      <BackImg background={starting} />
+
       <Lola>
         <StyledText>
           <h1>
