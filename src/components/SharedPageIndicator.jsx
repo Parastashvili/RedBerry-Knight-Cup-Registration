@@ -16,7 +16,6 @@ export default function SharedPageIndicator() {
     </div>
   );
 }
-
 const SharedComponent = styled.div`
   width: 366px;
   height: 65px;
