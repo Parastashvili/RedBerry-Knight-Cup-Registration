@@ -2,12 +2,12 @@ import { Link } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import styled, { createGlobalStyle } from "styled-components";
-import logo from "../assets/Khight cup logo.svg";
+import BackImg from "../components/BackImg";
 import PersonalBG from "../assets/second.png";
 import SharedPageIndicator from "../components/SharedPageIndicator";
 import RightHeader from "../components/RightHeader";
 import arrow from "../assets/arrow-right-circle.png";
-import StyledPersonal from "../styled-components/StyledPersonal"
+import StyledPersonal from "../styled-components/StyledPersonal";
 import approved from "../assets/ok.png";
 import error from "../assets/Mark.png";
 import Header2 from "../components/Header";
@@ -41,9 +41,7 @@ export default function Personal() {
       <div className="innerCont">
         <div>
           <GlobalStyles />
-          <Header>
-            <img src={logo} alt="" />
-          </Header>
+          <BackImg background={PersonalBG} />
           <ImageContainer />
         </div>
         <RighdSide>
