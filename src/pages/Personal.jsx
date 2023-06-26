@@ -24,7 +24,6 @@ const Personal = () => {
   useEffect(() => {
     const fields = ["name", "mail", "mobile", "date"];
     fields.forEach((field) => {
-      handleInputChangeForMandatoryFields(field);
       const savedValue = localStorage.getItem(field);
       if (savedValue) {
         setValue(field, savedValue);
@@ -80,7 +79,6 @@ const Personal = () => {
                 placeholder="Name"
                 type="text"
                 maxLength={30}
-                pattern="[a-z]*"
                 {...register("name", {
                   required: true,
                   minLength: 2,
@@ -101,7 +99,6 @@ const Personal = () => {
                 placeholder="Email"
                 type="mail"
                 maxLength={50}
-                pattern="[a-z]*"
                 {...register("mail", {
                   required: true,
                   minLength: 5,
@@ -127,11 +124,11 @@ const Personal = () => {
                 placeholder="Mobile"
                 type="text"
                 maxLength={9}
-                pattern="[0-9]*"
                 {...register("mobile", {
                   required: true,
                   minLength: 9,
                   maxLength: 9,
+                  pattern: { value: /5[0-9]{8}/ },
                 })}
                 onChange={(e) => handleInputChange("mobile", e)}
               />
@@ -210,32 +207,25 @@ const RighdSide = styled.div`
   flex-direction: column;
 `;
 const InputFieldCont = styled.form`
-  input:invalid {
-    animation: shake 300ms;
-  }
-  @keyframes shake {
-    25% {
-      transform: translateX(4px);
-    }
-    50% {
-      transform: translateX(-4px);
-    }
-    75% {
-      transform: translateX(4px);
-    }
-  }
   display: flex;
   flex-direction: column;
   gap: 40px;
   padding: 85px 48px 88px;
   margin: 0px;
+  input::placeholder {
+    color: #212529;
+  }
   div:hover {
-    background-color: #f8f9fa;
+    background-color: red;
     input {
       background-color: #f8f9fa;
     }
+    input::placeholder {
+      color: rgba(33, 37, 41, 0.5);
+    }
   }
   div {
+    border-radius: 4px;
     position: relative;
     padding: 8px 20px 8px 16px;
     max-width: 743px;
@@ -249,7 +239,7 @@ const InputFieldCont = styled.form`
       position: absolute;
       top: 25px;
       transform: translateY(-50%);
-      color: red;
+      color: #dc3545;
     }
     .name {
       left: 75px;
@@ -297,7 +287,6 @@ const Buttons = styled.div`
   max-width: 775px;
   padding: 0px 48px;
   button {
-    border: 1px solid #212529;
     border-radius: 8px;
     display: flex;
     align-items: center;
@@ -308,13 +297,17 @@ const Buttons = styled.div`
     font-size: 20px;
     line-height: 27px;
     text-transform: capitalize;
-    height: 53px;
-    cursor: pointer;
+    height: 61px;
     text-decoration: none;
     background: #212529;
     color: #ffffff;
     gap: 12px;
-    width: 128px;
+    width: 144px;
+    border: 4px solid #ffffff;
+  }
+  button:hover {
+    border: 4px solid rgba(194, 165, 249, 0.8);
+    background: #212529;
   }
 `;
 const BackButton = styled(Link)`
@@ -334,4 +327,8 @@ const BackButton = styled(Link)`
   height: 53px;
   cursor: pointer;
   text-decoration: none;
+  :hover {
+    border: 1px solid rgba(194, 165, 249, 0.8);
+    background: rgba(185, 180, 195, 0.3);
+  }
 `;
