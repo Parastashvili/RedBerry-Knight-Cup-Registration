@@ -19,7 +19,6 @@ const Personal = () => {
     setValue,
     formState: { errors, isValid },
     trigger,
-    watch,
   } = useForm();
   useEffect(() => {
     const fields = ["name", "mail", "mobile", "date"];
@@ -50,7 +49,6 @@ const Personal = () => {
   const handleInputChangeForMandatoryFields = (event) => {
     const input = event.target;
     const asterisk = input.nextElementSibling;
-
     if (input.value === "") {
       asterisk.style.display = "block";
     } else {
@@ -163,10 +161,12 @@ const Personal = () => {
             </div>
             <Buttons className="buttonCont">
               <BackButton to="/">Back</BackButton>
-              <button className="nextBTN" type="submit">
-                Next
-                <img src={arrow} alt="arrow" />
-              </button>
+              <Link className="route" to={isValid ? "/experience" : null}>
+                <button className="nextBTN" type="submit">
+                  Next
+                  <img src={arrow} alt="arrow" />
+                </button>
+              </Link>
             </Buttons>
           </InputFieldCont>
         </RighdSide>
@@ -212,18 +212,6 @@ const InputFieldCont = styled.form`
   gap: 40px;
   padding: 85px 48px 88px;
   margin: 0px;
-  input::placeholder {
-    color: #212529;
-  }
-  div:hover {
-    background-color: red;
-    input {
-      background-color: #f8f9fa;
-    }
-    input::placeholder {
-      color: rgba(33, 37, 41, 0.5);
-    }
-  }
   div {
     border-radius: 4px;
     position: relative;
@@ -234,6 +222,18 @@ const InputFieldCont = styled.form`
     align-items: center;
     justify-content: space-between;
     box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.125);
+    input::placeholder {
+      color: #212529;
+    }
+    div:hover {
+      background-color: #f8f9fa;
+      input {
+        background-color: #f8f9fa;
+      }
+      input::placeholder {
+        color: rgba(33, 37, 41, 0.5);
+      }
+    }
     .red-asterisk {
       display: block;
       position: absolute;
@@ -281,6 +281,9 @@ const InputField = styled.input`
   color: #212529;
 `;
 const Buttons = styled.div`
+  .route {
+    text-decoration: none;
+  }
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -304,6 +307,7 @@ const Buttons = styled.div`
     gap: 12px;
     width: 144px;
     border: 4px solid #ffffff;
+    cursor: pointer;
   }
   button:hover {
     border: 4px solid rgba(194, 165, 249, 0.8);
