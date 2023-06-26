@@ -57,9 +57,9 @@ console.log(grandmasters);
   };
 
   const CustomOption = ({ innerProps, label, data }) => (
-    <div className="ragaca" {...innerProps} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+    <div className="characterImgContainer" {...innerProps} >
       <div>{label}</div>
-      <img src={data.image} alt={label} style={{   marginLeft: '5px' }} />
+      <img src={data.image} alt={label}  />
     </div>
   );
   return(
@@ -109,7 +109,15 @@ const ExperienceSection = styled.div`
   width: 357px;
   height: 30px;
  }
- .ragaca img {
-  width: 100px;
+  .characterImgContainer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 10px 0 20px ;
+  }
+ .characterImgContainer img {
+  width: 100px ;
+  height: 72px;
+  margin-bottom: 10px;
  }
 `
