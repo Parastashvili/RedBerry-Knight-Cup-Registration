@@ -1,47 +1,67 @@
-import { Link } from "react-router-dom";
+import React from "react";
 import { useForm } from "react-hook-form";
+import { Link } from "react-router-dom";
 import { useEffect } from "react";
-import styled, { createGlobalStyle } from "styled-components";
-import BackImg from "../components/BackImg";
+import styled from "styled-components";
+import logo from "../assets/Khight cup logo.svg";
+import RightHeader from "../components/RightHeader";
 import PersonalBG from "../assets/second.png";
 import SharedPageIndicator from "../components/SharedPageIndicator";
-import RightHeader from "../components/RightHeader";
-import arrow from "../assets/arrow-right-circle.png";
 import StyledPersonal from "../styled-components/StyledPersonal";
-import approved from "../assets/ok.png";
-import error from "../assets/Mark.png";
-import Header2 from "../components/Header";
-export default function Personal() {
+import arrow from "../assets/arrow-right-circle.png";
+import validImage from "../assets/ok.png";
+import errorImage from "../assets/Mark.png";
+
+const Personal = () => {
   const {
     register,
     handleSubmit,
-    watch,
-    formState: { errors },
+    setValue,
+    formState: { errors, isValid },
+    trigger,
   } = useForm();
-  const onSubmit = (data) => console.log(data);
-  const nameValue = watch("name");
   useEffect(() => {
-    localStorage.setItem("name", nameValue);
-  }, [nameValue]);
-  const emailValue = watch("email");
-  useEffect(() => {
-    localStorage.setItem("email", emailValue);
-  }, [emailValue]);
-  const mobileValue = watch("mobile");
-  useEffect(() => {
-    localStorage.setItem("mobile", mobileValue);
-  }, [mobileValue]);
-  const dateValue = watch("date");
-  useEffect(() => {
-    localStorage.setItem("date", dateValue);
-  }, [dateValue]);
-  console.log(watch("name"));
+    const fields = ["name", "mail", "mobile", "date"];
+    fields.forEach((field) => {
+      const savedValue = localStorage.getItem(field);
+      if (savedValue) {
+        setValue(field, savedValue);
+        trigger(field);
+      }
+    });
+  }, [setValue, trigger]);
+  const saveToLocalStorage = (name, value) => {
+    localStorage.setItem(name, value);
+  };
+  const handleInputChange = (fieldName, e) => {
+    const value = e.target.value;
+    setValue(fieldName, value);
+    saveToLocalStorage(fieldName, value);
+    trigger(fieldName);
+    handleInputChangeForMandatoryFields(e);
+  };
+  const onSubmit = (data) => {
+    console.log(data.name);
+    console.log(data.mail);
+    console.log(data.mobile);
+    console.log(data.date);
+  };
+  const handleInputChangeForMandatoryFields = (event) => {
+    const input = event.target;
+    const asterisk = input.nextElementSibling;
+    if (input.value === "") {
+      asterisk.style.display = "block";
+    } else {
+      asterisk.style.display = "none";
+    }
+  };
   return (
-    <div className="App">
+    <MainContainer>
       <div className="innerCont">
         <div>
-          <GlobalStyles />
-          <BackImg background={PersonalBG} />
+          <Header>
+            <img src={logo} alt="" />
+          </Header>
           <ImageContainer />
         </div>
         <RighdSide>
@@ -49,66 +69,125 @@ export default function Personal() {
           <SharedPageIndicator />
           <StyledPersonal>
             <h1>Personal information</h1>
-            <p>This is basic informaton fields</p>
+            <p>This is basic informaton field</p>
           </StyledPersonal>
-          <InputFieldCont>
+          <InputFieldCont onSubmit={handleSubmit(onSubmit)}>
             <div>
               <InputField
-                placeholder="Name *"
+                placeholder="Name"
                 type="text"
                 maxLength={30}
-                {...register("name")}
+                {...register("name", {
+                  required: true,
+                  minLength: 2,
+                  maxLength: 30,
+                })}
+                onChange={(e) => handleInputChange("name", e)}
               />
+              <span className="red-asterisk name">*</span>
+              {errors.name && <img src={errorImage} alt="error Icon" />}
+              {!errors.name &&
+                localStorage.getItem("name") != undefined &&
+                localStorage.getItem("name") != "" && (
+                  <img src={validImage} alt="valid Icon" />
+                )}
             </div>
             <div>
               <InputField
-                placeholder="Email address *"
-                type="email"
-                {...register("email")}
+                placeholder="Email"
+                type="mail"
+                maxLength={50}
+                {...register("mail", {
+                  required: true,
+                  minLength: 5,
+                  maxLength: 50,
+                  pattern: {
+                    value: /^[\w.%+-]+@redberry\.ge$/,
+                  },
+                })}
+                onChange={(e) => handleInputChange("mail", e)}
               />
+              <span className="red-asterisk mail">*</span>
+              {errors.mail && (
+                <img className="buzz" src={errorImage} alt="error Icon" />
+              )}
+              {!errors.mail &&
+                localStorage.getItem("mail") != undefined &&
+                localStorage.getItem("mail") != "" && (
+                  <img src={validImage} alt="valid Icon" />
+                )}
             </div>
             <div>
               <InputField
-                placeholder="Phone number *"
-                type="mobile"
-                {...register("mobile")}
+                placeholder="Mobile"
+                type="text"
+                maxLength={9}
+                {...register("mobile", {
+                  required: true,
+                  minLength: 9,
+                  maxLength: 9,
+                  pattern: { value: /5[0-9]{8}/ },
+                })}
+                onChange={(e) => handleInputChange("mobile", e)}
               />
+              <span className="red-asterisk mobile">*</span>
+              {errors.mobile && (
+                <img className="buzz" src={errorImage} alt="error Icon" />
+              )}
+              {!errors.mobile &&
+                localStorage.getItem("mobile") != undefined &&
+                localStorage.getItem("mobile") != "" && (
+                  <img className="" src={validImage} alt="valid Icon" />
+                )}
             </div>
             <div>
               <InputField
-                placeholder="Date of birth *"
+                placeholder="Date of birth"
                 type="date"
-                {...register("date")}
+                {...register("date", {
+                  required: true,
+                })}
+                onChange={(e) => handleInputChange("date", e)}
               />
+              <span className="red-asterisk date">*</span>
+              {errors.date && (
+                <img className="buzz" src={errorImage} alt="error Icon" />
+              )}
+              {!errors.date &&
+                localStorage.getItem("date") != undefined &&
+                localStorage.getItem("date") != "" && (
+                  <img className="" src={validImage} alt="valid Icon" />
+                )}
             </div>
+            <Buttons className="buttonCont">
+              <BackButton to="/">Back</BackButton>
+              <Link className="route" to={isValid ? "/experience" : null}>
+                <button className="nextBTN" type="submit">
+                  Next
+                  <img src={arrow} alt="arrow" />
+                </button>
+              </Link>
+            </Buttons>
           </InputFieldCont>
-          <Buttons>
-            <BackButton to="/">Back</BackButton>
-            <NextButton type="submit">
-              Next <img src={arrow} alt="arrow" />
-            </NextButton>
-          </Buttons>
         </RighdSide>
       </div>
-    </div>
+    </MainContainer>
   );
-}
-const GlobalStyles = createGlobalStyle`
-body{
-  margin: 0px;
-}
-.App {
-  min-width: 1920px;
-  min-height: 100vh;
-  height: 100%;
+};
+
+export default Personal;
+
+const MainContainer = styled.div`
   display: flex;
   justify-content: center;
   align-items: center;
-}
-.innerCont{
-  display: flex;
-}`;
-
+  height: 100%;
+  min-height: 100vh;
+  width: 100%;
+  .innerCont {
+    display: flex;
+  }
+`;
 const Header = styled.div`
   display: flex;
   align-items: center;
@@ -123,7 +202,6 @@ const ImageContainer = styled.div`
   background: url(${PersonalBG});
   background-size: cover;
 `;
-
 const RighdSide = styled.div`
   display: flex;
   flex-direction: column;
@@ -135,6 +213,8 @@ const InputFieldCont = styled.form`
   padding: 85px 48px 88px;
   margin: 0px;
   div {
+    border-radius: 4px;
+    position: relative;
     padding: 8px 20px 8px 16px;
     max-width: 743px;
     height: 30px;
@@ -142,6 +222,45 @@ const InputFieldCont = styled.form`
     align-items: center;
     justify-content: space-between;
     box-shadow: inset 0px -1px 0px rgba(0, 0, 0, 0.125);
+    input::placeholder {
+      color: #212529;
+    }
+    div:hover {
+      background-color: #f8f9fa;
+      input {
+        background-color: #f8f9fa;
+      }
+      input::placeholder {
+        color: rgba(33, 37, 41, 0.5);
+      }
+    }
+    .red-asterisk {
+      display: block;
+      position: absolute;
+      top: 25px;
+      transform: translateY(-50%);
+      color: #dc3545;
+    }
+    .name {
+      left: 75px;
+    }
+    .mail {
+      left: 70px;
+    }
+    .mobile {
+      left: 85px;
+    }
+    .date {
+      left: 140px;
+    }
+  }
+  .buttonCont {
+    margin-top: 48px;
+    background-color: transparent;
+    box-shadow: none;
+  }
+  .buttonCont:hover {
+    background-color: transparent;
   }
   img {
     width: 20px;
@@ -149,7 +268,7 @@ const InputFieldCont = styled.form`
   }
 `;
 const InputField = styled.input`
-  width: 600px;
+  width: 700px;
   outline: none;
   border: none;
   display: flex;
@@ -162,11 +281,38 @@ const InputField = styled.input`
   color: #212529;
 `;
 const Buttons = styled.div`
+  .route {
+    text-decoration: none;
+  }
   display: flex;
   justify-content: space-between;
   align-items: center;
   max-width: 775px;
   padding: 0px 48px;
+  button {
+    border-radius: 8px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    line-height: 27px;
+    text-transform: capitalize;
+    height: 61px;
+    text-decoration: none;
+    background: #212529;
+    color: #ffffff;
+    gap: 12px;
+    width: 144px;
+    border: 4px solid #ffffff;
+    cursor: pointer;
+  }
+  button:hover {
+    border: 4px solid rgba(194, 165, 249, 0.8);
+    background: #212529;
+  }
 `;
 const BackButton = styled(Link)`
   border: 1px solid #212529;
@@ -185,10 +331,8 @@ const BackButton = styled(Link)`
   height: 53px;
   cursor: pointer;
   text-decoration: none;
-`;
-const NextButton = styled(BackButton)`
-  background: #212529;
-  color: #ffffff;
-  gap: 12px;
-  width: 128px;
+  :hover {
+    border: 1px solid rgba(194, 165, 249, 0.8);
+    background: rgba(185, 180, 195, 0.3);
+  }
 `;
