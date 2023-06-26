@@ -4,12 +4,14 @@ import RightHeader from "../styled-components/RightHeader"
 import StyledPersonal from "../styled-components/StyledPersonal"
 import ShearPageIndicator from "../components/SharedPageIndicator"
 import chessImg from "../assets/third.png"
-import { useState } from "react"
+import { useState , useEffect } from "react"
 import Select from 'react-select';
+import axios from "axios"
 
 export default function Experience() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
+  const [grandmasters, setGrandmasters] = useState([]);
 
   const options = [
     { value: 'Bigginer', label: 'Bigginer' },
@@ -26,6 +28,27 @@ export default function Experience() {
   const handleOptionChange = selectedOption => {
     setSelectedOption(selectedOption);
   };
+
+  
+
+  useEffect(() => {
+    const fetchGrandmasters = async () => {
+      try {
+        const response = await axios.get('https://chess-tournament-api.devtest.ge/api/grandmasters');
+        const data = response.data;
+        const options = data.map(grandmaster => ({
+          value: grandmaster.id,
+          label: grandmaster.name
+        }));
+        setGrandmasters(options);
+      } catch (error) {
+        console.error('Error fetching grandmasters:', error);
+      }
+    };
+
+    fetchGrandmasters();
+  }, []);
+
 
   const handleOptionChange2 = selectedOption => {
     setSelectedOption2(selectedOption);
@@ -51,9 +74,9 @@ export default function Experience() {
       />
        <Select
        className="select"
-        value={selectedOption2}
+         value={selectedOption2}
         onChange={handleOptionChange2}
-        options={options2}
+        options={grandmasters}
         placeholder="Choose your character *"
       />
     </div>
