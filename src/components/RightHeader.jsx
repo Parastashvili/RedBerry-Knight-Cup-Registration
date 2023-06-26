@@ -1,5 +1,5 @@
 import React from "react";
-import StyledRightHeader from "../styled-components/RightHeader"
+import StyledRightHeader from "../styled-components/RightHeader";
 export default function RightHeader() {
   return (
     <div>

@@ -20,7 +20,8 @@ const StyledHeader = styled.div`
   position: absolute;
   top: 0;
   left: 0;
-  width: 45%;
+  width: 100%;
+
   h3 {
     color: #ffffff;
     padding-left: 8px;
