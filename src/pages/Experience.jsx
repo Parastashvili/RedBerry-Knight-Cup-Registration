@@ -38,22 +38,30 @@ export default function Experience() {
         const data = response.data;
         const options = data.map(grandmaster => ({
           value: grandmaster.id,
-          label: grandmaster.name
+          label: grandmaster.name,
+          image : grandmaster.image
         }));
         setGrandmasters(options);
       } catch (error) {
         console.error('Error fetching grandmasters:', error);
       }
     };
+    
 
     fetchGrandmasters();
   }, []);
 
-
+console.log(grandmasters);
   const handleOptionChange2 = selectedOption => {
     setSelectedOption2(selectedOption);
   };
 
+  const CustomOption = ({ innerProps, label, data }) => (
+    <div className="ragaca" {...innerProps} style={{ display: 'flex', alignItems: 'center', justifyContent: 'space-between' }}>
+      <div>{label}</div>
+      <img src={data.image} alt={label} style={{   marginLeft: '5px' }} />
+    </div>
+  );
   return(
     <ExperienceSection>
     <BackImg background={chessImg} />
@@ -77,6 +85,7 @@ export default function Experience() {
          value={selectedOption2}
         onChange={handleOptionChange2}
         options={grandmasters}
+        components={{ Option: CustomOption }}
         placeholder="Choose your character *"
       />
     </div>
@@ -90,6 +99,7 @@ export default function Experience() {
 const ExperienceSection = styled.div`
  display: flex;
  justify-content: flex-start;
+ width: 100vw;
  .selectSection {
   display: flex;
   gap: 23px;
@@ -98,5 +108,8 @@ const ExperienceSection = styled.div`
  .select {
   width: 357px;
   height: 30px;
+ }
+ .ragaca img {
+  width: 100px;
  }
 `
