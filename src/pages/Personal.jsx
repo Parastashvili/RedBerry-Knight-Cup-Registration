@@ -1,6 +1,5 @@
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
-import { Link } from "react-router-dom";
 import { useEffect } from "react";
 import styled from "styled-components";
 import logo from "../assets/Khight cup logo.svg";
@@ -8,9 +7,10 @@ import RightHeader from "../components/RightHeader";
 import PersonalBG from "../assets/second.png";
 import SharedPageIndicator from "../components/SharedPageIndicator";
 import StyledPersonal from "../styled-components/StyledPersonal";
-import arrow from "../assets/arrow-right-circle.png";
 import validImage from "../assets/ok.png";
 import errorImage from "../assets/Mark.png";
+import Buttons from "../components/Buttons";
+import arrow from "../assets/arrow-right-circle.png";
 
 const Personal = () => {
   const {
@@ -27,11 +27,27 @@ const Personal = () => {
       if (savedValue) {
         setValue(field, savedValue);
         trigger(field);
+        document.getElementById(field).style.display = "none";
       }
     });
   }, [setValue, trigger]);
-  const saveToLocalStorage = (name, value) => {
-    localStorage.setItem(name, value);
+  useEffect(() => {
+    if (isValid) {
+      setIsDone(true);
+    } else {
+      setIsDone(false);
+    }
+  }, [isValid]);
+  const handleInputChangeForMandatoryFields = (event) => {
+    const input = event.target;
+    const asterisk = input.nextElementSibling;
+    if (input.value === "") {
+      asterisk.style.display = "block";
+      setActive("");
+    } else {
+      asterisk.style.display = "none";
+      setActive("active");
+    }
   };
   const handleInputChange = (fieldName, e) => {
     const value = e.target.value;
@@ -40,21 +56,17 @@ const Personal = () => {
     trigger(fieldName);
     handleInputChangeForMandatoryFields(e);
   };
+  const saveToLocalStorage = (name, value) => {
+    localStorage.setItem(name, value);
+  };
   const onSubmit = (data) => {
     console.log(data.name);
     console.log(data.mail);
     console.log(data.mobile);
     console.log(data.date);
   };
-  const handleInputChangeForMandatoryFields = (event) => {
-    const input = event.target;
-    const asterisk = input.nextElementSibling;
-    if (input.value === "") {
-      asterisk.style.display = "block";
-    } else {
-      asterisk.style.display = "none";
-    }
-  };
+  const [active, setActive] = useState("");
+  const [isDone, setIsDone] = useState(false);
   return (
     <MainContainer>
       <div className="innerCont">
@@ -66,7 +78,7 @@ const Personal = () => {
         </div>
         <RighdSide>
           <RightHeader />
-          <SharedPageIndicator />
+          <SharedPageIndicator bgcolor={active} done={isDone} />
           <StyledPersonal>
             <h1>Personal information</h1>
             <p>This is basic informaton field</p>
@@ -84,7 +96,9 @@ const Personal = () => {
                 })}
                 onChange={(e) => handleInputChange("name", e)}
               />
-              <span className="red-asterisk name">*</span>
+              <span id="name" className="red-asterisk name">
+                *
+              </span>
               {errors.name && <img src={errorImage} alt="error Icon" />}
               {!errors.name &&
                 localStorage.getItem("name") != undefined &&
@@ -107,7 +121,9 @@ const Personal = () => {
                 })}
                 onChange={(e) => handleInputChange("mail", e)}
               />
-              <span className="red-asterisk mail">*</span>
+              <span id="mail" className="red-asterisk mail">
+                *
+              </span>
               {errors.mail && (
                 <img className="buzz" src={errorImage} alt="error Icon" />
               )}
@@ -130,7 +146,9 @@ const Personal = () => {
                 })}
                 onChange={(e) => handleInputChange("mobile", e)}
               />
-              <span className="red-asterisk mobile">*</span>
+              <span id="mobile" className="red-asterisk mobile">
+                *
+              </span>
               {errors.mobile && (
                 <img className="buzz" src={errorImage} alt="error Icon" />
               )}
@@ -149,7 +167,9 @@ const Personal = () => {
                 })}
                 onChange={(e) => handleInputChange("date", e)}
               />
-              <span className="red-asterisk date">*</span>
+              <span id="date" className="red-asterisk date">
+                *
+              </span>
               {errors.date && (
                 <img className="buzz" src={errorImage} alt="error Icon" />
               )}
@@ -159,15 +179,12 @@ const Personal = () => {
                   <img className="" src={validImage} alt="valid Icon" />
                 )}
             </div>
-            <Buttons className="buttonCont">
-              <BackButton to="/">Back</BackButton>
-              <Link className="route" to={isValid ? "/experience" : null}>
-                <button className="nextBTN" type="submit">
-                  Next
-                  <img src={arrow} alt="arrow" />
-                </button>
-              </Link>
-            </Buttons>
+            <Buttons
+              backLink="/"
+              NextFunc={isValid ? "/experience" : null}
+              img={<img src={arrow} alt="arrow" />}
+              buttonTxt="Next"
+            />
           </InputFieldCont>
         </RighdSide>
       </div>
@@ -191,8 +208,8 @@ const MainContainer = styled.div`
 const Header = styled.div`
   display: flex;
   align-items: center;
-  padding-left: 60px;
-  width: 863px;
+  padding: 0px 60px;
+  width: 923px;
   height: 84px;
   background-color: #7025fb;
 `;
@@ -210,14 +227,14 @@ const InputFieldCont = styled.form`
   display: flex;
   flex-direction: column;
   gap: 40px;
-  padding: 85px 48px 88px;
+  padding: 85px 48px 88px 48px;
   margin: 0px;
   div {
     border-radius: 4px;
     position: relative;
     padding: 8px 20px 8px 16px;
     max-width: 743px;
-    height: 30px;
+    height: 46px;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -268,7 +285,7 @@ const InputFieldCont = styled.form`
   }
 `;
 const InputField = styled.input`
-  width: 700px;
+  width: 680px;
   outline: none;
   border: none;
   display: flex;
@@ -277,62 +294,5 @@ const InputField = styled.input`
   font-style: normal;
   font-weight: 400;
   font-size: 20px;
-  line-height: 150%;
   color: #212529;
-`;
-const Buttons = styled.div`
-  .route {
-    text-decoration: none;
-  }
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  max-width: 775px;
-  padding: 0px 48px;
-  button {
-    border-radius: 8px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-family: "Open Sans";
-    font-style: normal;
-    font-weight: 400;
-    font-size: 20px;
-    line-height: 27px;
-    text-transform: capitalize;
-    height: 61px;
-    text-decoration: none;
-    background: #212529;
-    color: #ffffff;
-    gap: 12px;
-    width: 144px;
-    border: 4px solid #ffffff;
-    cursor: pointer;
-  }
-  button:hover {
-    border: 4px solid rgba(194, 165, 249, 0.8);
-    background: #212529;
-  }
-`;
-const BackButton = styled(Link)`
-  border: 1px solid #212529;
-  border-radius: 8px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: "Open Sans";
-  font-style: normal;
-  font-weight: 400;
-  font-size: 20px;
-  line-height: 27px;
-  text-transform: capitalize;
-  color: #212529;
-  width: 93px;
-  height: 53px;
-  cursor: pointer;
-  text-decoration: none;
-  :hover {
-    border: 1px solid rgba(194, 165, 249, 0.8);
-    background: rgba(185, 180, 195, 0.3);
-  }
 `;

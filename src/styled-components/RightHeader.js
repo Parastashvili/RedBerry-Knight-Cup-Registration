@@ -2,9 +2,8 @@ import styled from "styled-components";
 const StyledRightHeader = styled.div`
   display: flex;
   align-items: center;
-  width: 863px;
   height: 84px;
-  width: 949px;
+  width: 997px;
   background-color: transparent;
   padding: 0px 48px;
   font-family: "Open Sans";

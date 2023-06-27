@@ -1,11 +1,24 @@
 import React from "react";
 import styled from "styled-components";
-export default function SharedPageIndicator() {
+import check from "../assets/okok.png";
+export default function SharedPageIndicator(props) {
   return (
     <div>
       <SharedComponent>
         <div className="topContainer">
-          <PageIndicator1>1</PageIndicator1>
+          <PageIndicator1
+            style={
+              props.bgcolor === "active"
+                ? { background: "#E9FAF1" }
+                : { background: "#ffffff" }
+            }
+          >
+            {props.done == true ? (
+              <img src={check} alt="check sign" />
+            ) : (
+              <p>1</p>
+            )}
+          </PageIndicator1>
           <div className="divider"></div>
           <PageIndicator2>2</PageIndicator2>
         </div>
