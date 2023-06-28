@@ -1,6 +1,7 @@
 import starting from "../assets/starting.png";
 import styled from "styled-components";
-import StyledButton from "../styled-components/StyledButton";
+import { Link } from "react-router-dom";
+import {BlackButton} from "../styled-components/StyledButtons";
 import arrow from "../assets/arrow-right-circle.png";
 import BackImg from "../components/BackImg";
 export default function Home() {
@@ -15,12 +16,14 @@ export default function Home() {
           </h1>
           <p>A LOT ABOUT</p>
         </StyledText>
-        <StyledButton>
+        <Link to={"/personal"}>
+        <BlackButton>
           <BtnText>
             <p> Get started</p>
             <img src={arrow} alt="" />
           </BtnText>
-        </StyledButton>
+        </BlackButton>
+        </Link>
       </Lola>
     </StyledBody>
   );
