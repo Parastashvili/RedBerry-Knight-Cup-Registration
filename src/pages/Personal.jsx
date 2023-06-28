@@ -11,8 +11,23 @@ import validImage from "../assets/ok.png";
 import errorImage from "../assets/Mark.png";
 import Buttons from "../components/Buttons";
 import arrow from "../assets/arrow-right-circle.png";
+import { Calendar } from "primereact/calendar";
 
 const Personal = () => {
+  const [selectedDate, setSelectedDate] = useState(null);
+  useEffect(() => {
+    const savedDate = localStorage.getItem("date");
+    if (savedDate) {
+      setSelectedDate(new Date(savedDate));
+    }
+  }, []);
+  useEffect(() => {
+    if (selectedDate) {
+      localStorage.setItem("date", selectedDate);
+    } else {
+      localStorage.setItem("date", "");
+    }
+  }, [selectedDate]);
   const {
     register,
     handleSubmit,
@@ -21,7 +36,7 @@ const Personal = () => {
     trigger,
   } = useForm();
   useEffect(() => {
-    const fields = ["name", "mail", "mobile", "date"];
+    const fields = ["name", "mail", "mobile"];
     fields.forEach((field) => {
       const savedValue = localStorage.getItem(field);
       if (savedValue) {
@@ -159,29 +174,41 @@ const Personal = () => {
                 )}
             </div>
             <div>
-              <InputField
+              <Calendar
+                className="custom-calendar"
                 placeholder="Date of birth"
-                type="date"
-                {...register("date", {
-                  required: true,
-                })}
-                onChange={(e) => handleInputChange("date", e)}
+                value={selectedDate}
+                onChange={(e) => setSelectedDate(e.value)}
               />
-              <span id="date" className="red-asterisk date">
-                *
-              </span>
-              {errors.date && (
-                <img className="buzz" src={errorImage} alt="error Icon" />
+              {!selectedDate && !localStorage.getItem("date") && (
+                <span id="date" className="red-asterisk date">
+                  *
+                </span>
               )}
-              {!errors.date &&
+              {selectedDate && (
+                <img
+                  className="valid-image"
+                  src={validImage}
+                  alt="valid Icon"
+                />
+              )}
+              {selectedDate === null &&
                 localStorage.getItem("date") != undefined &&
                 localStorage.getItem("date") != "" && (
-                  <img className="" src={validImage} alt="valid Icon" />
+                  <img
+                    className="error-image"
+                    src={errorImage}
+                    alt="error Icon"
+                  />
                 )}
             </div>
             <Buttons
               backLink="/"
-              NextFunc={isValid ? "/experience" : null}
+              NextFunc={
+                isValid == true && localStorage.getItem("date") != ""
+                  ? "/experience"
+                  : null
+              }
               img={<img src={arrow} alt="arrow" />}
               buttonTxt="Next"
             />
@@ -282,6 +309,30 @@ const InputFieldCont = styled.form`
   img {
     width: 20px;
     height: 20px;
+  }
+  .custom-calendar {
+    width: 100%;
+  }
+  .custom-calendar:focus {
+    border: none;
+    outline: none;
+  }
+  .custom-calendar input[type="text"],
+  .custom-calendar .p-inputtext {
+    font-family: "Open Sans";
+    font-style: normal;
+    font-weight: 400;
+    font-size: 20px;
+    color: #212529;
+    padding: 0px;
+    outline: none;
+    border: none;
+  }
+  .p-inputtext:focus {
+    box-shadow: none;
+  }
+  .custom-calendar .p-datepicker-input::placeholder {
+    color: #212529;
   }
 `;
 const InputField = styled.input`
