@@ -4,6 +4,7 @@ import RightHeader from "../styled-components/RightHeader";
 import StyledPersonal from "../styled-components/StyledPersonal";
 import ShearPageIndicator from "../components/SharedPageIndicator";
 import chessImg from "../assets/third.png";
+import {BlackButton , BackButton} from "../styled-components/StyledButtons"
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
@@ -20,9 +21,41 @@ export default function Experience() {
     { value: "option3", label: "Professional" },
   ];
 
+  // const handleOptionChange = (selectedOption) => {
+  //   setSelectedOption(selectedOption);
+  //   localStorage.setItem("levelOfKnowladge", JSON.stringify(selectedOption.label));
+  // };
+
   const handleOptionChange = (selectedOption) => {
     setSelectedOption(selectedOption);
+    localStorage.setItem(
+      "levelOfKnowladge",
+      JSON.stringify({
+        label: selectedOption?.label,
+      })
+    );
   };
+  
+
+  const handleOptionChange2 = (selectedOption) => {
+    setSelectedOption2(selectedOption);
+    localStorage.setItem("characterName", JSON.stringify(selectedOption.label));
+    localStorage.setItem("characterImg", JSON.stringify(selectedOption.image));
+  };
+
+  // const handleOptionChange2 = (selectedOption) => {
+  //   setSelectedOption2(selectedOption);
+  //   localStorage.setItem(
+  //     "characterName",
+  //     JSON.stringify({
+  //       value: selectedOption?.value,
+  //       label: selectedOption?.label,
+  //       image: selectedOption?.image,
+  //     })
+  //   );
+  // };
+  
+  
 
   useEffect(() => {
     const fetchGrandmasters = async () => {
@@ -43,12 +76,19 @@ export default function Experience() {
     };
 
     fetchGrandmasters();
+
+    const storedSelectedOption = localStorage.getItem("characterName");
+    if (storedSelectedOption) {
+      setSelectedOption(JSON.parse(storedSelectedOption));
+    }
+
+    const storedSelectedOption2 = localStorage.getItem("characterImg");
+    if (storedSelectedOption2) {
+      setSelectedOption2(JSON.parse(storedSelectedOption2));
+    }
   }, []);
 
-  console.log(grandmasters);
-  const handleOptionChange2 = (selectedOption) => {
-    setSelectedOption2(selectedOption);
-  };
+ 
 
   const CustomOption = ({ innerProps, label, data }) => (
     <div className="characterImgContainer" {...innerProps}>
@@ -57,13 +97,13 @@ export default function Experience() {
     </div>
   );
 
-  const { register, handleSubmit } = useForm();
+  const { register, handleSubmit} = useForm();
 
-  // const onSubmit = (data) => {
-  //   console.log(data);
+  const onSubmit = (data) => {
+    console.log("sssssss");
+  };
 
-  // };
-
+   
   return (
     <ExperienceSection>
       <BackImg background={chessImg} />
@@ -76,22 +116,24 @@ export default function Experience() {
           <h1>Chess experience</h1>
           <p>This is basic informaton fields</p>
         </StyledPersonal>
-        <SelectForm>
+        <SelectForm onSubmit={handleSubmit(onSubmit)}>
           <div className="wrapper">
             <Select
               className="select"
-              value={selectedOption}
+              value={selectedOption || JSON.parse(localStorage.getItem("levelOfKnowladge"))}
               onChange={handleOptionChange}
               options={options}
               placeholder="level of knowledge *"
+              required
             />
             <Select
               className="select"
-              value={selectedOption2}
+              value={selectedOption2 || JSON.parse(localStorage.getItem("characterName"))}
               onChange={handleOptionChange2}
               options={grandmasters}
               components={{ Option: CustomOption }}
               placeholder="Choose your character *"
+              required
             />
           </div>
           <label>Have you participated in the Redberry Championship?</label>
@@ -101,7 +143,7 @@ export default function Experience() {
                 type="radio"
                 id="yes"
                 value="yes"
-                {...register("redberryChampionship")}
+                {...register("redberryChampionship" , {required : true})}
               />
               Yes
             </div>
@@ -110,10 +152,14 @@ export default function Experience() {
                 type="radio"
                 id="no"
                 value="no"
-                {...register("redberryChampionship")}
+                {...register("redberryChampionship" , {required : true})}
               />
               No
             </div>
+          </div>
+          <div className="buttons">
+            <BackButton to={"/personal"}>Back</BackButton>
+            <BlackButton>Done</BlackButton>
           </div>
         </SelectForm>
       </div>
@@ -157,5 +203,8 @@ const SelectForm = styled.form`
   .inputBox {
     display: flex;
     gap: 8px;
+  }
+  .buttons {
+    margin-top: 174px;
   }
 `;
