@@ -1,28 +1,31 @@
 import styled from "styled-components";
-import BackImg from "../components/BackImg";
 import RightHeader from "../styled-components/RightHeader";
 import StyledPersonal from "../styled-components/StyledPersonal";
 import ShearPageIndicator from "../components/SharedPageIndicator";
-import chessImg from "../assets/third.png";
-import {BlackButton , BackButton} from "../styled-components/StyledButtons"
+import Author from "../styled-components/Author";
+import Quotes from "../styled-components/Quotes";
+import { BlackButton, BackButton } from "../styled-components/StyledButtons";
 import { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import Select from "react-select";
 import axios from "axios";
-
+import { useNavigate } from "react-router";
+import logo from "../assets/Khight cup logo.svg";
+import PersonalBG from "../assets/third.png";
+import Header from "../styled-components/Header";
 export default function Experience() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
   const [redberryChampionship, setRedberryChampionship] = useState(null);
+  const [active, setActive] = useState("active");
+  const [isDone, setIsDone] = useState(true);
   const [grandmasters, setGrandmasters] = useState([]);
-  const {sendInfo , setSendInfo} = useState({}) ;
-
+  const navigate = useNavigate();
   const options = [
-    { value: "Bigginer", label: "Bigginer" },
-    { value: "Intermediate", label: "Intermediate" },
-    { value: "Professional", label: "Professional" },
+    { value: "beginner", label: "Beginner" },
+    { value: "normal", label: "Normal" },
+    { value: "professional", label: "Professional" },
   ];
-
   const handleOptionChange = (selectedOption) => {
     setSelectedOption(selectedOption);
     localStorage.setItem(
@@ -32,9 +35,6 @@ export default function Experience() {
       })
     );
   };
-  
-
-
   const handleOptionChange2 = (selectedOption) => {
     setSelectedOption2(selectedOption);
     localStorage.setItem(
@@ -46,9 +46,6 @@ export default function Experience() {
       })
     );
   };
-  
-  
-
   useEffect(() => {
     const fetchGrandmasters = async () => {
       try {
@@ -66,79 +63,88 @@ export default function Experience() {
         console.error("Error fetching grandmasters:", error);
       }
     };
-
     fetchGrandmasters();
-
     const storedSelectedOption = localStorage.getItem("levelOfKnowladge");
     if (storedSelectedOption) {
       setSelectedOption(JSON.parse(storedSelectedOption));
     }
-
     const storedSelectedOption2 = localStorage.getItem("characterName");
     if (storedSelectedOption2) {
       setSelectedOption2(JSON.parse(storedSelectedOption2));
     }
-
-    const savedValue = localStorage.getItem('redberryChampionship');
-  if (savedValue !== null) {
-    setRedberryChampionship(JSON.parse(savedValue));
-
-    const storedSendInfo = localStorage.getItem("sendInfo");
-    if (storedSendInfo) {
-      setSendInfo(JSON.parse(storedSendInfo));
+    const savedValue = localStorage.getItem("redberryChampionship");
+    if (savedValue !== null) {
+      setRedberryChampionship(JSON.parse(savedValue));
     }
-  }
   }, []);
-
-  
- 
-
   const CustomOption = ({ innerProps, label, data }) => (
     <div className="characterImgContainer" {...innerProps}>
       <div>{label}</div>
       <img src={data.image} alt={label} />
     </div>
   );
-
-  const { register, handleSubmit} = useForm();
-
+  const { register, handleSubmit } = useForm();
   const onSubmit = (data) => {
     const dateObj = new Date(localStorage.getItem("date"));
-  const formattedDate = dateObj.toLocaleDateString("en-US", {
-    month: "2-digit",
-    day: "2-digit",
-    year: "numeric",
-  });
-
-
-    const formData = new FormData();
-    formData.append("name", localStorage.getItem("name"));
-    formData.append("email", localStorage.getItem("mobile"));
-    formData.append("phone", localStorage.getItem("mail"));
-    formData.append("date_of_birth", formattedDate );
-    formData.append("experience_level", JSON.parse(localStorage.getItem('levelOfKnowladge')).label);
-    formData.append("already_participated",localStorage.getItem('redberryChampionship') === "true" );
-    formData.append("character_id", Number(JSON.parse(localStorage.getItem('characterName')).value));
-   console.log(formData.getAll("date_of_birth"))
+    const formattedDate = dateObj.toLocaleDateString("en-US", {
+      month: "2-digit",
+      day: "2-digit",
+      year: "numeric",
+    });
+    const name = localStorage.getItem("name");
+    const email = localStorage.getItem("mail");
+    const phone = localStorage.getItem("mobile");
+    const date_of_birth = formattedDate;
+    const experience_level = JSON.parse(
+      localStorage.getItem("levelOfKnowladge")
+    ).label.toLowerCase();
+    const already_participated =
+      localStorage.getItem("redberryChampionship") == "true";
+    const character_id = Number(
+      JSON.parse(localStorage.getItem("characterName")).value
+    );
     axios
-      .post("https://chess-tournament-api.devtest.ge/api/register", formData)
-      .then((response) => {
-        console.log(response.data);
+      .post("https://chess-tournament-api.devtest.ge/api/register", {
+        name,
+        email,
+        phone,
+        date_of_birth,
+        experience_level,
+        already_participated,
+        character_id,
+      })
+      .then(() => {
+        navigate("/completed");
       })
       .catch((error) => {
         console.error("Error sending data:", error);
       });
+      localStorage.clear();
   };
-
-   
   return (
     <ExperienceSection>
-      <BackImg background={chessImg} />
       <div>
+        <Header>
+          <img src={logo} alt="" />
+        </Header>
+        <ImageContainer>
+          <Quotes>
+            “Many have become chess masters;
+            <br /> no one has become the master of chess.”
+          </Quotes>
+          <Author>- Siegbert Tarrasch</Author>
+        </ImageContainer>
+      </div>
+      <div className="rightCont">
         <RightHeader>
           First step is done, continue to finish onboarding
         </RightHeader>
-        <ShearPageIndicator />
+        <ShearPageIndicator
+          bgcolor={active}
+          done={isDone}
+          bgcolor2={"active2"}
+          done2={false}
+        />
         <StyledPersonal>
           <h1>Chess experience</h1>
           <p>This is basic informaton fields</p>
@@ -147,7 +153,10 @@ export default function Experience() {
           <div className="wrapper">
             <Select
               className="select"
-              value={selectedOption || JSON.parse(localStorage.getItem("levelOfKnowladge"))}
+              value={
+                selectedOption ||
+                JSON.parse(localStorage.getItem("levelOfKnowladge"))
+              }
               onChange={handleOptionChange}
               options={options}
               placeholder="level of knowledge *"
@@ -155,7 +164,10 @@ export default function Experience() {
             />
             <Select
               className="select"
-              value={selectedOption2 || JSON.parse(localStorage.getItem("characterName"))}
+              value={
+                selectedOption2 ||
+                JSON.parse(localStorage.getItem("characterName"))
+              }
               onChange={handleOptionChange2}
               options={grandmasters}
               components={{ Option: CustomOption }}
@@ -163,31 +175,39 @@ export default function Experience() {
               required
             />
           </div>
-          <label>Have you participated in the Redberry Championship?</label>
+          <label>
+            Have you participated in the Redberry Championship?<span>*</span>
+          </label>
           <div className="inputs">
             <div className="inputBox">
-            <input
-              type="radio"
-              id="yes"
-              value="yes"
-              {...register("redberryChampionship", { required: true })}
-              checked={redberryChampionship === true}
-              onChange={() => {
-                setRedberryChampionship(true);
-                localStorage.setItem('redberryChampionship', JSON.stringify(true));
-              }}
+              <input
+                type="radio"
+                id="yes"
+                value="yes"
+                {...register("redberryChampionship", { required: true })}
+                checked={redberryChampionship === true}
+                onChange={() => {
+                  setRedberryChampionship(true);
+                  localStorage.setItem(
+                    "redberryChampionship",
+                    JSON.stringify(true)
+                  );
+                }}
               />
               Yes
               <input
-              type="radio"
-              id="no"
-              value="no"
-              {...register("redberryChampionship", { required: true })}
-              checked={redberryChampionship === false}
-              onChange={() => {
-                setRedberryChampionship(false);
-                localStorage.setItem('redberryChampionship', JSON.stringify(false));
-              }}
+                type="radio"
+                id="no"
+                value="no"
+                {...register("redberryChampionship", { required: true })}
+                checked={redberryChampionship === false}
+                onChange={() => {
+                  setRedberryChampionship(false);
+                  localStorage.setItem(
+                    "redberryChampionship",
+                    JSON.stringify(false)
+                  );
+                }}
               />
               No
             </div>
@@ -201,12 +221,34 @@ export default function Experience() {
     </ExperienceSection>
   );
 }
-
+const ImageContainer = styled.div`
+  width: 923px;
+  height: 996px;
+  background: url(${PersonalBG});
+  background-size: cover;
+  .author {
+    color: #e5e6e8;
+    font-size: 24px;
+    font-family: Nunito;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+    margin: 24px 132px;
+  }
+`;
 const ExperienceSection = styled.div`
   display: flex;
-  justify-content: flex-start;
-  width: 100vw;
-  
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  .rightCont{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    margin-top: -200px;
+  }
 `;
 const SelectForm = styled.form`
   margin: 103px 0 0 54px;
@@ -216,8 +258,14 @@ const SelectForm = styled.form`
     margin-bottom: 96px;
   }
   .select {
-    width: 357px;
+    width: 392px;
     height: 30px;
+    color: #212529;
+    font-size: 20px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
   }
   .characterImgContainer {
     display: flex;
@@ -230,6 +278,18 @@ const SelectForm = styled.form`
     height: 72px;
     margin-bottom: 10px;
   }
+  label {
+    color: #212529;
+    font-size: 20px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+  }
+  span {
+    color: #dc3545;
+    margin-left: 4px;
+  }
   .inputs {
     display: flex;
     gap: 16px;
@@ -238,8 +298,16 @@ const SelectForm = styled.form`
   .inputBox {
     display: flex;
     gap: 8px;
+    font-size: 16px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 150%;
+    color: #212529;
   }
   .buttons {
-    margin-top: 174px;
+    display: flex;
+    gap: 645px;
+    margin-top: 120px;
   }
 `;
