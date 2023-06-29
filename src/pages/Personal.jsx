@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Khight cup logo.svg";
 import RightHeader from "../components/RightHeader";
-import PersonalBG from "../assets/second.png";
 import SharedPageIndicator from "../components/SharedPageIndicator";
 import StyledPersonal from "../styled-components/StyledPersonal";
 import validImage from "../assets/ok.png";
@@ -15,7 +14,7 @@ import ErrorMsg from "../components/ErrorMsg";
 import arrow from "../assets/arrow-right-circle.png";
 import Quotes from "../styled-components/Quotes";
 import Header from "../styled-components/Header";
-import ImageContainer from "../styled-components/ImageContainer";
+import PersonalBG from "../assets/second.png";
 const Personal = () => {
   const {
     register,
@@ -106,7 +105,10 @@ const Personal = () => {
             <img src={logo} alt="" />
           </Header>
           <ImageContainer>
-            <Quotes>“When you see a good move, look for a better one.”</Quotes>
+            <Quotes>
+              “When you see a good move,
+              <br /> look for a better one.”
+            </Quotes>
             <h2 className="author">-Emanuel Lasker</h2>
           </ImageContainer>
         </div>
@@ -298,6 +300,22 @@ const MainContainer = styled.div`
   width: 100%;
   .innerCont {
     display: flex;
+  }
+`;
+const ImageContainer = styled.div`
+  width: 923px;
+  height: 996px;
+  background: url(${PersonalBG});
+  background-size: cover;
+  .author {
+    color: #e5e6e8;
+    font-size: 24px;
+    font-family: Nunito;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+    margin: 24px 132px;
   }
 `;
 const RighdSide = styled.div`
