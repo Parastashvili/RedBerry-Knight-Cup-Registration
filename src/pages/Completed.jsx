@@ -6,7 +6,6 @@ export default function Completed() {
   return (
     <Main>
       <SectionStyle>
-        <>
           <div>
             <Header>
               <img src={logo} alt="header logo" />
@@ -17,7 +16,6 @@ export default function Completed() {
             <img src={rocket} alt="" />
             <h1>Onboarding completed!</h1>
           </StyleDiv>
-        </>
       </SectionStyle>
     </Main>
   );
