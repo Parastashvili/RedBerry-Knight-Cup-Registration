@@ -15,6 +15,7 @@ const BlackButton = styled.button`
   justify-content: center;
   gap: 8px;
   border: 4px solid #ffffff;
+  text-decoration: none;
   :hover {
     border: 4px solid rgba(194, 165, 249, 0.8);
   }

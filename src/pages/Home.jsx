@@ -21,7 +21,11 @@ export default function Home() {
             </h1>
             <p>A LOT ABOUT</p>
           </StyledText>
-          <Link to={"/personal"}>
+          <Link
+            className="link"
+            to={"/personal"}
+            style={{ textdecoration: "none" }}
+          >
             <BlackButton style={{ border: "0px" }}>
               <BtnText>
                 <p> Get started</p>
@@ -100,4 +104,7 @@ const BtnText = styled.div`
 const Lola = styled.div`
   padding: 85px;
   width: 997px;
+  .link {
+    text-decoration: none;
+  }
 `;
