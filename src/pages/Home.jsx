@@ -44,6 +44,7 @@ const StyledText = styled.div`
     line-height: 109px;
     color: #ffffff;
   }
+
   p {
     font-weight: 700;
     font-size: 20px;
