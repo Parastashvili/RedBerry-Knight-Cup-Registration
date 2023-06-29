@@ -23,7 +23,7 @@ Users should be able to:
 
 ### Screenshot
 
-![](./assets/preview.jpg)
+![](./src//assets/startScreen.png)
 
 ### Getting Started
 
@@ -68,4 +68,5 @@ git clone https://github.com/beqa200/redberry-knight-cup-bitcamp.git
 
 We would like to give a big credit to our mentor, [Beqa Maisuradze](https://www.linkedin.com/in/beka-maisuradze-76a730234/) who helped us to solve many issues during this project.
 To sum up, our team project gave us a huge experience in mastering ReactJS as well as improving our skills in teamworking. With the huge effort of our team members we made a great project which is a good representation of our skills and understanding of the ReactJS.
+
 In addition to improving our technical knowledge, the team project allowed us to improve our teamwork and problem solving skills. In conclusion, this project significantly enriched our experience in ReactJS which will definitely help us in the future projects.
