@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { useEffect } from "react";
 import { Calendar } from "primereact/calendar";
+import { BackButton, BlackButton } from "../styled-components/StyledButtons";
+import { useNavigate } from "react-router-dom";
 import styled from "styled-components";
 import logo from "../assets/Khight cup logo.svg";
 import RightHeader from "../components/RightHeader";
@@ -11,9 +13,7 @@ import StyledPersonal from "../styled-components/StyledPersonal";
 import validImage from "../assets/ok.png";
 import ErrorMsg from "../components/ErrorMsg";
 import arrow from "../assets/arrow-right-circle.png";
-import { BackButton, BlackButton } from "../styled-components/StyledButtons";
-import { Link } from "react-router-dom";
-import { useNavigate } from "react-router-dom";
+import Quotes from "../styled-components/Quotes";
 const Personal = () => {
   const {
     register,
@@ -77,11 +77,7 @@ const Personal = () => {
   const saveToLocalStorage = (name, value) => {
     localStorage.setItem(name, value);
   };
-  const onSubmit = (data) => {
-    console.log(data.name);
-    console.log(data.mail);
-    console.log(data.mobile);
-    console.log(data.date);
+  const onSubmit = () => {
     navigate("/experience");
   };
   const renderErrors = () => {
@@ -107,7 +103,10 @@ const Personal = () => {
           <Header>
             <img src={logo} alt="" />
           </Header>
-          <ImageContainer />
+          <ImageContainer>
+            <Quotes>“When you see a good move, look for a better one.”</Quotes>
+            <h2 className="author">-Emanuel Lasker</h2>
+          </ImageContainer>
         </div>
         <RighdSide>
           <RightHeader />
@@ -275,10 +274,10 @@ const Personal = () => {
             </InnerDiv>
             <div className="buttonContainer">
               <BackButton to={"/"}>Back</BackButton>
-                <BlackButton>
-                  Next
-                  <img src={arrow} alt="arrow icon" />
-                </BlackButton>
+              <BlackButton>
+                Next
+                <img src={arrow} alt="arrow icon" />
+              </BlackButton>
             </div>
           </InputFieldCont>
         </RighdSide>
@@ -287,7 +286,6 @@ const Personal = () => {
   );
 };
 export default Personal;
-
 const MainContainer = styled.div`
   overflow: hidden;
   display: flex;
@@ -313,6 +311,16 @@ const ImageContainer = styled.div`
   height: 996px;
   background: url(${PersonalBG});
   background-size: cover;
+  .author {
+    color: #e5e6e8;
+    font-size: 24px;
+    font-family: Nunito;
+    font-style: italic;
+    font-weight: 500;
+    line-height: normal;
+    text-transform: uppercase;
+    margin: 24px 132px;
+  }
 `;
 const RighdSide = styled.div`
   display: flex;
