@@ -13,18 +13,15 @@ import axios from "axios";
 export default function Experience() {
   const [selectedOption, setSelectedOption] = useState(null);
   const [selectedOption2, setSelectedOption2] = useState(null);
+  const [redberryChampionship, setRedberryChampionship] = useState(null);
   const [grandmasters, setGrandmasters] = useState([]);
+  const {sendInfo , setSendInfo} = useState({}) ;
 
   const options = [
     { value: "Bigginer", label: "Bigginer" },
     { value: "option2", label: "Intermediate" },
     { value: "option3", label: "Professional" },
   ];
-
-  // const handleOptionChange = (selectedOption) => {
-  //   setSelectedOption(selectedOption);
-  //   localStorage.setItem("levelOfKnowladge", JSON.stringify(selectedOption.label));
-  // };
 
   const handleOptionChange = (selectedOption) => {
     setSelectedOption(selectedOption);
@@ -37,23 +34,18 @@ export default function Experience() {
   };
   
 
+
   const handleOptionChange2 = (selectedOption) => {
     setSelectedOption2(selectedOption);
-    localStorage.setItem("characterName", JSON.stringify(selectedOption.label));
-    localStorage.setItem("characterImg", JSON.stringify(selectedOption.image));
+    localStorage.setItem(
+      "characterName",
+      JSON.stringify({
+        value: selectedOption?.value,
+        label: selectedOption?.label,
+        image: selectedOption?.image,
+      })
+    );
   };
-
-  // const handleOptionChange2 = (selectedOption) => {
-  //   setSelectedOption2(selectedOption);
-  //   localStorage.setItem(
-  //     "characterName",
-  //     JSON.stringify({
-  //       value: selectedOption?.value,
-  //       label: selectedOption?.label,
-  //       image: selectedOption?.image,
-  //     })
-  //   );
-  // };
   
   
 
@@ -77,16 +69,23 @@ export default function Experience() {
 
     fetchGrandmasters();
 
-    const storedSelectedOption = localStorage.getItem("characterName");
+    const storedSelectedOption = localStorage.getItem("levelOfKnowladge");
     if (storedSelectedOption) {
       setSelectedOption(JSON.parse(storedSelectedOption));
     }
 
-    const storedSelectedOption2 = localStorage.getItem("characterImg");
+    const storedSelectedOption2 = localStorage.getItem("characterName");
     if (storedSelectedOption2) {
       setSelectedOption2(JSON.parse(storedSelectedOption2));
     }
+
+    const savedValue = localStorage.getItem('redberryChampionship');
+  if (savedValue !== null) {
+    setRedberryChampionship(JSON.parse(savedValue));
+  }
   }, []);
+
+  
 
  
 
@@ -139,20 +138,28 @@ export default function Experience() {
           <label>Have you participated in the Redberry Championship?</label>
           <div className="inputs">
             <div className="inputBox">
-              <input
-                type="radio"
-                id="yes"
-                value="yes"
-                {...register("redberryChampionship" , {required : true})}
+            <input
+              type="radio"
+              id="yes"
+              value="yes"
+              {...register("redberryChampionship", { required: true })}
+              checked={redberryChampionship === true}
+              onChange={() => {
+                setRedberryChampionship(true);
+                localStorage.setItem('redberryChampionship', JSON.stringify(true));
+              }}
               />
               Yes
-            </div>
-            <div className="inputBox">
               <input
-                type="radio"
-                id="no"
-                value="no"
-                {...register("redberryChampionship" , {required : true})}
+              type="radio"
+              id="no"
+              value="no"
+              {...register("redberryChampionship", { required: true })}
+              checked={redberryChampionship === false}
+              onChange={() => {
+                setRedberryChampionship(false);
+                localStorage.setItem('redberryChampionship', JSON.stringify(false));
+              }}
               />
               No
             </div>
