@@ -75,6 +75,7 @@ const StyledText = styled.div`
     line-height: normal;
     text-transform: uppercase;
   }
+
   p {
     color: #212529;
     font-size: 20px;
