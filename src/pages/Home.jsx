@@ -1,40 +1,68 @@
 import starting from "../assets/starting.png";
 import styled from "styled-components";
 import { Link } from "react-router-dom";
-import {BlackButton} from "../styled-components/StyledButtons";
+import { BlackButton } from "../styled-components/StyledButtons";
 import arrow from "../assets/arrow-right-circle.png";
-import BackImg from "../components/BackImg";
+import logo from "../assets/Khight cup logo.svg";
 export default function Home() {
   return (
-    <StyledBody>
-      <BackImg background={starting} />
-
-      <Lola>
-        <StyledText>
-          <h1>
-            CHESS SAYS <br /> WHO WE ARE
-          </h1>
-          <p>A LOT ABOUT</p>
-        </StyledText>
-        <Link to={"/personal"}>
-        <BlackButton>
-          <BtnText>
-            <p> Get started</p>
-            <img src={arrow} alt="" />
-          </BtnText>
-        </BlackButton>
-        </Link>
-      </Lola>
-    </StyledBody>
+    <Main>
+      <StyledBody>
+        <div>
+          <Header>
+            <img src={logo} alt="header logo" />
+          </Header>
+          <ImageContainer />
+        </div>
+        <Lola>
+          <StyledText>
+            <h1>
+              CHESS SAYS <br /> WHO WE ARE
+            </h1>
+            <p>A LOT ABOUT</p>
+          </StyledText>
+          <Link to={"/personal"}>
+            <BlackButton style={{ border: "0px" }}>
+              <BtnText>
+                <p> Get started</p>
+                <img src={arrow} alt="" />
+              </BtnText>
+            </BlackButton>
+          </Link>
+        </Lola>
+      </StyledBody>
+    </Main>
   );
 }
 
+const Main = styled.div`
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+const Header = styled.div`
+  display: flex;
+  align-items: center;
+  padding: 0px 60px;
+  width: 923px;
+  height: 84px;
+  background-color: #7025fb;
+`;
+const ImageContainer = styled.div`
+  width: 923px;
+  height: 996px;
+  background: url(${starting});
+  background-size: cover;
+`;
 const StyledBody = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
   background: #fd5334;
-  width: 100vw;
+  max-width: 1920px;
+  max-height: 1080px;
 `;
 const StyledText = styled.div`
   display: flex;
@@ -59,7 +87,6 @@ const StyledText = styled.div`
 const BtnText = styled.div`
   display: flex;
   flex-direction: row;
-
   p {
     font-weight: 400;
     font-size: 20px;
@@ -71,5 +98,6 @@ const BtnText = styled.div`
   }
 `;
 const Lola = styled.div`
-  margin-left: 85px;
+  padding: 85px;
+  width: 997px;
 `;

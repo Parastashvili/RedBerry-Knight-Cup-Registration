@@ -10,8 +10,10 @@ import SharedPageIndicator from "../components/SharedPageIndicator";
 import StyledPersonal from "../styled-components/StyledPersonal";
 import validImage from "../assets/ok.png";
 import ErrorMsg from "../components/ErrorMsg";
-import Buttons from "../components/Buttons";
 import arrow from "../assets/arrow-right-circle.png";
+import { BackButton, BlackButton } from "../styled-components/StyledButtons";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 const Personal = () => {
   const {
     register,
@@ -24,6 +26,7 @@ const Personal = () => {
   const [active, setActive] = useState("");
   const [isDone, setIsDone] = useState(false);
 
+  const navigate = useNavigate();
   useEffect(() => {
     const fields = ["name", "mail", "mobile", "date"];
     fields.forEach((field) => {
@@ -79,11 +82,12 @@ const Personal = () => {
     console.log(data.mail);
     console.log(data.mobile);
     console.log(data.date);
+    navigate("/experience");
   };
   const renderErrors = () => {
     const errorComponents = [];
     if (errors.name) {
-      errorComponents.push(<ErrorMsg name="name" id="saxeli" txt="name" />);
+      errorComponents.push(<ErrorMsg name="name" txt="name" />);
     }
     if (errors.mail) {
       errorComponents.push(<ErrorMsg name="mail" txt="email address" />);
@@ -269,12 +273,13 @@ const Personal = () => {
               </span>
               {isValid && <img src={validImage} alt="valid Icon" />}
             </InnerDiv>
-            <button
-              style={{ width: "100px", height: "50px", background: "green" }}
-              type="submit"
-            >
-              next
-            </button>
+            <div className="buttonContainer">
+              <BackButton to={"/"}>Back</BackButton>
+                <BlackButton>
+                  Next
+                  <img src={arrow} alt="arrow icon" />
+                </BlackButton>
+            </div>
           </InputFieldCont>
         </RighdSide>
       </div>
@@ -314,6 +319,11 @@ const RighdSide = styled.div`
   flex-direction: column;
 `;
 const InputFieldCont = styled.form`
+  .buttonContainer {
+    display: flex;
+    justify-content: space-between;
+    width: 743px;
+  }
   display: flex;
   flex-direction: column;
   gap: 40px;
