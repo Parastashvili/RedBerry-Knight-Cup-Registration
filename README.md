@@ -1,16 +1,4 @@
-# Photosnap Website solution
-
-## Table of contents
-
-- [Overview](#overview)
-  - [The challenge](#the-challenge)
-  - [Screenshot](#screenshot)
-  - [Links](#links)
-- [My process](#my-process)
-  - [Built with](#built-with)
-  - [Useful resources](#useful-resources)
-- [Author](#author)
-- [Acknowledgments](#acknowledgments)
+# Redberry Knight Cup
 
 ## Overview
 
@@ -54,7 +42,7 @@ git clone https://github.com/beqa200/redberry-knight-cup-bitcamp.git
 
 ### Useful resources
 
-- [reactor.bitcamp](https://reactor.bitcamp.ge/) -This web-page helped us to dig deeper into ReactJS.
+- [reactor.bitcamp.ge](https://reactor.bitcamp.ge/) -This web-page helped us to dig deeper into ReactJS.
 - [developer.mozilla](https://developer.mozilla.org/en-US/) - This is an amazing web-page which gave us in-depth knowledge in JavaScript language. We'd recommend it to anyone still learning this language.
 - [stackoverflow](https://stackoverflow.com/) - This is an amazing web-page where you can ask any technical question about speciefic issue and other developers will help you to solve the problem. Their Q&A platform is a great tool to find the right answer for your project. We highly recommend this web-page for other developers.
 
