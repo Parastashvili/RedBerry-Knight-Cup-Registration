@@ -16,6 +16,14 @@ const BlackButton = styled.button`
   gap: 8px;
   border: 4px solid #ffffff;
   text-decoration: none;
+  color: #fff;
+  font-size: 20px;
+  font-family: Open Sans;
+  font-style: normal;
+  font-weight: 400;
+  line-height: normal;
+  text-transform: capitalize;
+
   :hover {
     border: 4px solid rgba(194, 165, 249, 0.8);
   }
