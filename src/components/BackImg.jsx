@@ -13,7 +13,7 @@ const StyledBack = styled.section`
   position: relative;
   width: 923px;
   .imgback {
-    height: 100vh;
+    height: 100%;
     width: 100%;
   }
 `;
