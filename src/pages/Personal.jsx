@@ -14,6 +14,8 @@ import validImage from "../assets/ok.png";
 import ErrorMsg from "../components/ErrorMsg";
 import arrow from "../assets/arrow-right-circle.png";
 import Quotes from "../styled-components/Quotes";
+import Header from "../styled-components/Header";
+import ImageContainer from "../styled-components/ImageContainer";
 const Personal = () => {
   const {
     register,
@@ -296,30 +298,6 @@ const MainContainer = styled.div`
   width: 100%;
   .innerCont {
     display: flex;
-  }
-`;
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0px 60px;
-  width: 923px;
-  height: 84px;
-  background-color: #7025fb;
-`;
-const ImageContainer = styled.div`
-  width: 923px;
-  height: 996px;
-  background: url(${PersonalBG});
-  background-size: cover;
-  .author {
-    color: #e5e6e8;
-    font-size: 24px;
-    font-family: Nunito;
-    font-style: italic;
-    font-weight: 500;
-    line-height: normal;
-    text-transform: uppercase;
-    margin: 24px 132px;
   }
 `;
 const RighdSide = styled.div`

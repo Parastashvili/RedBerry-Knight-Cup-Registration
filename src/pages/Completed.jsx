@@ -2,6 +2,7 @@ import rocket from "../assets/Rocket.png";
 import styled from "styled-components";
 import starting from "../assets/complete.png";
 import logo from "../assets/Khight cup logo.svg";
+import Header from "../styled-components/Header";
 export default function Completed() {
   return (
     <Main>
@@ -26,14 +27,6 @@ const Main = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0px 60px;
-  width: 923px;
-  height: 84px;
-  background-color: #7025fb;
 `;
 const ImageContainer = styled.div`
   width: 923px;

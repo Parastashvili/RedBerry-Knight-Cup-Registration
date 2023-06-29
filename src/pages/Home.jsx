@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { BlackButton } from "../styled-components/StyledButtons";
 import arrow from "../assets/arrow-right-circle.png";
 import logo from "../assets/Khight cup logo.svg";
+import Header from "../styled-components/Header";
 export default function Home() {
   return (
     <Main>
@@ -45,14 +46,6 @@ const Main = styled.div`
   display: flex;
   align-items: center;
   justify-content: center;
-`;
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0px 60px;
-  width: 923px;
-  height: 84px;
-  background-color: #7025fb;
 `;
 const ImageContainer = styled.div`
   width: 923px;
