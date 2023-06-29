@@ -50,7 +50,6 @@ const SectionStyle = styled.section`
   justify-content: center;
   width: 100vw;
 `;
-
 const StyleDiv = styled.div`
   width: 997px;
   display: flex;
