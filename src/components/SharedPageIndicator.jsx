@@ -20,7 +20,19 @@ export default function SharedPageIndicator(props) {
             )}
           </PageIndicator1>
           <div className="divider"></div>
-          <PageIndicator2>2</PageIndicator2>
+          <PageIndicator2
+            style={
+              props.bgcolor2 === "active2"
+                ? { background: "#E9FAF1" }
+                : { background: "#ffffff" }
+            }
+          >
+            {props.done2 == true ? (
+              <img src={check} alt="check sign" />
+            ) : (
+              <p>2</p>
+            )}
+          </PageIndicator2>
         </div>
         <div className="bottomContainer">
           <p>Personal information</p> <p>Chess experience</p>
