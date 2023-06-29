@@ -115,11 +115,11 @@ export default function Experience() {
       })
       .then(() => {
         navigate("/completed");
+        localStorage.clear();
       })
       .catch((error) => {
         console.error("Error sending data:", error);
       });
-      localStorage.clear();
   };
   return (
     <ExperienceSection>
