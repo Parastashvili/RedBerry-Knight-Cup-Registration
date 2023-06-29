@@ -19,8 +19,8 @@ export default function Experience() {
 
   const options = [
     { value: "Bigginer", label: "Bigginer" },
-    { value: "option2", label: "Intermediate" },
-    { value: "option3", label: "Professional" },
+    { value: "Intermediate", label: "Intermediate" },
+    { value: "Professional", label: "Professional" },
   ];
 
   const handleOptionChange = (selectedOption) => {
@@ -82,11 +82,15 @@ export default function Experience() {
     const savedValue = localStorage.getItem('redberryChampionship');
   if (savedValue !== null) {
     setRedberryChampionship(JSON.parse(savedValue));
+
+    const storedSendInfo = localStorage.getItem("sendInfo");
+    if (storedSendInfo) {
+      setSendInfo(JSON.parse(storedSendInfo));
+    }
   }
   }, []);
 
   
-
  
 
   const CustomOption = ({ innerProps, label, data }) => (
@@ -99,7 +103,31 @@ export default function Experience() {
   const { register, handleSubmit} = useForm();
 
   const onSubmit = (data) => {
-    console.log("sssssss");
+    const dateObj = new Date(localStorage.getItem("date"));
+  const formattedDate = dateObj.toLocaleDateString("en-US", {
+    month: "2-digit",
+    day: "2-digit",
+    year: "numeric",
+  });
+
+
+    const formData = new FormData();
+    formData.append("name", localStorage.getItem("name"));
+    formData.append("email", localStorage.getItem("mobile"));
+    formData.append("phone", localStorage.getItem("mail"));
+    formData.append("date_of_birth", formattedDate );
+    formData.append("experience_level", JSON.parse(localStorage.getItem('levelOfKnowladge')).label);
+    formData.append("already_participated",localStorage.getItem('redberryChampionship') === "true" );
+    formData.append("character_id", Number(JSON.parse(localStorage.getItem('characterName')).value));
+   console.log(formData.getAll("date_of_birth"))
+    axios
+      .post("https://chess-tournament-api.devtest.ge/api/register", formData)
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.error("Error sending data:", error);
+      });
   };
 
    
