@@ -6,16 +6,16 @@ export default function Completed() {
   return (
     <Main>
       <SectionStyle>
-          <div>
-            <Header>
-              <img src={logo} alt="header logo" />
-            </Header>
-            <ImageContainer />
-          </div>
-          <StyleDiv>
-            <img src={rocket} alt="" />
-            <h1>Onboarding completed!</h1>
-          </StyleDiv>
+        <div>
+          <Header>
+            <img src={logo} alt="header logo" />
+          </Header>
+          <ImageContainer />
+        </div>
+        <StyleDiv>
+          <img src={rocket} alt="" />
+          <h1>Onboarding completed!</h1>
+        </StyleDiv>
       </SectionStyle>
     </Main>
   );
@@ -54,8 +54,11 @@ const StyleDiv = styled.div`
   flex-direction: column;
   align-items: center;
   h1 {
-    font-weight: 800;
+    color: #000;
     font-size: 36px;
-    line-height: 54px;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 800;
+    line-height: 150%;
   }
 `;
