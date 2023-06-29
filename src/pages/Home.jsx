@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { BlackButton } from "../styled-components/StyledButtons";
 import arrow from "../assets/arrow-right-circle.png";
 import logo from "../assets/Khight cup logo.svg";
+import Header from "../styled-components/Header";
 export default function Home() {
   return (
     <Main>
@@ -46,14 +47,6 @@ const Main = styled.div`
   align-items: center;
   justify-content: center;
 `;
-const Header = styled.div`
-  display: flex;
-  align-items: center;
-  padding: 0px 60px;
-  width: 923px;
-  height: 84px;
-  background-color: #7025fb;
-`;
 const ImageContainer = styled.div`
   width: 923px;
   height: 996px;
@@ -74,16 +67,22 @@ const StyledText = styled.div`
   align-items: baseline;
   transform: translateY(-150px);
   h1 {
-    font-weight: 800;
+    color: #fff;
     font-size: 80px;
-    line-height: 109px;
-    color: #ffffff;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 900;
+    line-height: normal;
+    text-transform: uppercase;
   }
   p {
-    font-weight: 700;
-    font-size: 20px;
-    line-height: 27px;
     color: #212529;
+    font-size: 20px;
+    font-family: Nunito;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    text-transform: uppercase;
     transform: translate(-25px, -15px);
   }
 `;
@@ -91,14 +90,15 @@ const StyledText = styled.div`
 const BtnText = styled.div`
   display: flex;
   flex-direction: row;
+  gap: 12px;
   p {
-    font-weight: 400;
+    color: #fff;
     font-size: 20px;
-    line-height: 27px;
-    color: #ffffff;
-  }
-  img {
-    padding-left: 12px;
+    font-family: Open Sans;
+    font-style: normal;
+    font-weight: 400;
+    line-height: normal;
+    text-transform: capitalize;
   }
 `;
 const Lola = styled.div`
