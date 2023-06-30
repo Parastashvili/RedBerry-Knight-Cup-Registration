@@ -6,22 +6,13 @@
 
 Users should be able to:
 
-- View the optimal layout for each page depending on their device's screen size
+- Register on RedBerry Knigh Cup. and validate their information
 - See hover states for all interactive elements throughout the site
+- Resolution is static 1920x1080px
 
 ### Screenshot
 
 ![](./src//assets/startScreen.png)
-
-### Getting Started
-
-1. First of all you need to clone app repository from github:
-
-```
-git clone https://github.com/beqa200/redberry-knight-cup-bitcamp.git
-```
-
-2. Next step requires start live server.
 
 ### Links
 
